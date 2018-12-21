@@ -34,16 +34,36 @@ namespace ConsoleApp19
         string GetBackground();
     }
 
+    class Image
+    {
+        public Image(string path, double width, double height, string content)
+        {
+            Path = path;
+            Width = width;
+            Height = height;
+            Content = content;
+        }
+
+        public string Path { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
+        public string Content { get; set; }
+    }
+
     class ImageBackground : Background
     {
-        public string Image { get; set; }
-        public void SetImage(string image)
+        public ImageBackground(Image myImage)
         {
-            Image = image;
+            MyImage = myImage;
+        }
+        public Image MyImage { get; set; }
+        public void SetImage(Image image)
+        {
+            MyImage = image;
         }
         public string GetBackground()
         {
-            return Image;
+            return MyImage.Content;
         }
     }
     class ColorBackground : Background
@@ -68,6 +88,8 @@ namespace ConsoleApp19
         public void Run()
         {
             ColorBackground color = new ColorBackground("Red");
+            Image i = new Image("data.json", 100, 100, "ImageMause");
+            ImageBackground background = new ImageBackground(i);
             Window window = new Window("My Window1");
             Window window2 = new Window("My Window2");
             window.Setbackground(color);
@@ -77,6 +99,8 @@ namespace ConsoleApp19
             window2.Show();
             color.SetColor("Green");
             window2.Setbackground(color);
+            window2.Show();
+            window2.Setbackground(background);
             window2.Show();
         }
     }
